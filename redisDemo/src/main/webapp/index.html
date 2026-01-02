@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WebSocket示例</title>
+</head>
+<body>
+<h2>WebSocket 测试</h2>
+<input type="text" id="msg" placeholder="输入消息">
+<button onclick="send()">发送</button>
+<div id="output"></div>
+<script>
+    // 创建WebSocket连接（注意：使用wss://或ws://）
+    // const socket = new WebSocket("ws://localhost:8080/chat");
+    // socket.onopen((event)=>{
+    //     console.log('WebSocket连接已建立');
+    //     socket.send('Hello Server!');
+    // })
+    // socket.onmessage((event)=>{
+    //     console.log('收到消息:', event.data);
+    // })
+    // socket.onerror((error)=>{
+    //     console.error('WebSocket错误:', error);
+    // })
+    // socket.onclose = function(event) {
+    //     console.log('WebSocket连接已关闭');
+    // };
+    const output = document.getElementById("output");
+    const ws = new WebSocket("ws://localhost:8080/chat");
+    ws.onopen=()=>{
+        output.innerHTML += '<p>连接成功</p>';
+    };
+    ws.onmessage=(e)=>{
+        output.innerHTML += '<p>${e.data}</p>';
+    };
+    function send(){
+        const msg = document.getElementById('msg').value;
+        ws.send(msg);
+        document.getElementById('msg').value='';
+    }
+</script>
+</body>
+</html>
